@@ -8,7 +8,8 @@ package pos
 
 import (
 	context "context"
-	events "github.com/aburpos/pkg/pb/events"
+
+	events "github.com/yahyaoncloud/pkg/pb/events"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
