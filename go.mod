@@ -1,4 +1,4 @@
-module github.com/aburpos/pkg
+module github.com/yahyaoncloud/pkg
 
 go 1.24.4
 
