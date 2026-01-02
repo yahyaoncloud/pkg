@@ -8,7 +8,6 @@ package pos
 
 import (
 	context "context"
-
 	events "github.com/yahyaoncloud/pkg/pb/events"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -26,6 +25,7 @@ const (
 	POSEventService_SubscribeCommands_FullMethodName = "/aburpos.pos.v1.POSEventService/SubscribeCommands"
 	POSEventService_PublishEvent_FullMethodName      = "/aburpos.pos.v1.POSEventService/PublishEvent"
 	POSEventService_Register_FullMethodName          = "/aburpos.pos.v1.POSEventService/Register"
+	POSEventService_VerifyTenant_FullMethodName      = "/aburpos.pos.v1.POSEventService/VerifyTenant"
 )
 
 // POSEventServiceClient is the client API for POSEventService service.
@@ -44,8 +44,10 @@ type POSEventServiceClient interface {
 	SubscribeCommands(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Command], error)
 	// Unary call to publish a single event (fallback for non-streaming)
 	PublishEvent(ctx context.Context, in *events.EventEnvelope, opts ...grpc.CallOption) (*PublishResponse, error)
-	// Register POS server with Central
+	// Register POS server with Central (Legacy/Direct)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+	// Verify Tenant (New Flow: Code + Email -> Metadata)
+	VerifyTenant(ctx context.Context, in *VerifyTenantRequest, opts ...grpc.CallOption) (*VerifyTenantResponse, error)
 }
 
 type pOSEventServiceClient struct {
@@ -118,6 +120,16 @@ func (c *pOSEventServiceClient) Register(ctx context.Context, in *RegisterReques
 	return out, nil
 }
 
+func (c *pOSEventServiceClient) VerifyTenant(ctx context.Context, in *VerifyTenantRequest, opts ...grpc.CallOption) (*VerifyTenantResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VerifyTenantResponse)
+	err := c.cc.Invoke(ctx, POSEventService_VerifyTenant_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // POSEventServiceServer is the server API for POSEventService service.
 // All implementations must embed UnimplementedPOSEventServiceServer
 // for forward compatibility.
@@ -134,8 +146,10 @@ type POSEventServiceServer interface {
 	SubscribeCommands(*SubscribeRequest, grpc.ServerStreamingServer[Command]) error
 	// Unary call to publish a single event (fallback for non-streaming)
 	PublishEvent(context.Context, *events.EventEnvelope) (*PublishResponse, error)
-	// Register POS server with Central
+	// Register POS server with Central (Legacy/Direct)
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
+	// Verify Tenant (New Flow: Code + Email -> Metadata)
+	VerifyTenant(context.Context, *VerifyTenantRequest) (*VerifyTenantResponse, error)
 	mustEmbedUnimplementedPOSEventServiceServer()
 }
 
@@ -160,6 +174,9 @@ func (UnimplementedPOSEventServiceServer) PublishEvent(context.Context, *events.
 }
 func (UnimplementedPOSEventServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedPOSEventServiceServer) VerifyTenant(context.Context, *VerifyTenantRequest) (*VerifyTenantResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method VerifyTenant not implemented")
 }
 func (UnimplementedPOSEventServiceServer) mustEmbedUnimplementedPOSEventServiceServer() {}
 func (UnimplementedPOSEventServiceServer) testEmbeddedByValue()                         {}
@@ -254,6 +271,24 @@ func _POSEventService_Register_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _POSEventService_VerifyTenant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyTenantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(POSEventServiceServer).VerifyTenant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: POSEventService_VerifyTenant_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(POSEventServiceServer).VerifyTenant(ctx, req.(*VerifyTenantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // POSEventService_ServiceDesc is the grpc.ServiceDesc for POSEventService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -272,6 +307,10 @@ var POSEventService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Register",
 			Handler:    _POSEventService_Register_Handler,
+		},
+		{
+			MethodName: "VerifyTenant",
+			Handler:    _POSEventService_VerifyTenant_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

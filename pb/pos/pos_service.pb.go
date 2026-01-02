@@ -7,14 +7,13 @@
 package pos
 
 import (
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
-
 	events "github.com/yahyaoncloud/pkg/pb/events"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
 )
 
 const (
@@ -849,6 +848,242 @@ func (x *ServerConfig) GetCompressionEnabled() bool {
 	return false
 }
 
+type VerifyTenantRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TenantCode    string                 `protobuf:"bytes,1,opt,name=tenant_code,json=tenantCode,proto3" json:"tenant_code,omitempty"`
+	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`                          // Contact Email
+	Mobile        string                 `protobuf:"bytes,3,opt,name=mobile,proto3" json:"mobile,omitempty"`                        // Contact Mobile (Optional but recommended)
+	MachineId     string                 `protobuf:"bytes,4,opt,name=machine_id,json=machineId,proto3" json:"machine_id,omitempty"` // Unique Hardware ID of the requesting server
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyTenantRequest) Reset() {
+	*x = VerifyTenantRequest{}
+	mi := &file_pos_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyTenantRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyTenantRequest) ProtoMessage() {}
+
+func (x *VerifyTenantRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pos_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyTenantRequest.ProtoReflect.Descriptor instead.
+func (*VerifyTenantRequest) Descriptor() ([]byte, []int) {
+	return file_pos_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *VerifyTenantRequest) GetTenantCode() string {
+	if x != nil {
+		return x.TenantCode
+	}
+	return ""
+}
+
+func (x *VerifyTenantRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *VerifyTenantRequest) GetMobile() string {
+	if x != nil {
+		return x.Mobile
+	}
+	return ""
+}
+
+func (x *VerifyTenantRequest) GetMachineId() string {
+	if x != nil {
+		return x.MachineId
+	}
+	return ""
+}
+
+type VerifyTenantResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Valid          bool                   `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
+	Error          string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	TenantMetadata *TenantMetadata        `protobuf:"bytes,3,opt,name=tenant_metadata,json=tenantMetadata,proto3" json:"tenant_metadata,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *VerifyTenantResponse) Reset() {
+	*x = VerifyTenantResponse{}
+	mi := &file_pos_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyTenantResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyTenantResponse) ProtoMessage() {}
+
+func (x *VerifyTenantResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pos_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyTenantResponse.ProtoReflect.Descriptor instead.
+func (*VerifyTenantResponse) Descriptor() ([]byte, []int) {
+	return file_pos_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *VerifyTenantResponse) GetValid() bool {
+	if x != nil {
+		return x.Valid
+	}
+	return false
+}
+
+func (x *VerifyTenantResponse) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *VerifyTenantResponse) GetTenantMetadata() *TenantMetadata {
+	if x != nil {
+		return x.TenantMetadata
+	}
+	return nil
+}
+
+type TenantMetadata struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"` // TNT-UUID
+	TenantName    string                 `protobuf:"bytes,2,opt,name=tenant_name,json=tenantName,proto3" json:"tenant_name,omitempty"`
+	LicenseKey    string                 `protobuf:"bytes,3,opt,name=license_key,json=licenseKey,proto3" json:"license_key,omitempty"`
+	PlanType      string                 `protobuf:"bytes,4,opt,name=plan_type,json=planType,proto3" json:"plan_type,omitempty"`
+	ValidTill     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=valid_till,json=validTill,proto3" json:"valid_till,omitempty"`
+	MaxBranches   int32                  `protobuf:"varint,6,opt,name=max_branches,json=maxBranches,proto3" json:"max_branches,omitempty"`
+	MaxUsers      int32                  `protobuf:"varint,7,opt,name=max_users,json=maxUsers,proto3" json:"max_users,omitempty"`
+	Currency      string                 `protobuf:"bytes,8,opt,name=currency,proto3" json:"currency,omitempty"`
+	Timezone      string                 `protobuf:"bytes,9,opt,name=timezone,proto3" json:"timezone,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TenantMetadata) Reset() {
+	*x = TenantMetadata{}
+	mi := &file_pos_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TenantMetadata) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TenantMetadata) ProtoMessage() {}
+
+func (x *TenantMetadata) ProtoReflect() protoreflect.Message {
+	mi := &file_pos_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TenantMetadata.ProtoReflect.Descriptor instead.
+func (*TenantMetadata) Descriptor() ([]byte, []int) {
+	return file_pos_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *TenantMetadata) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+func (x *TenantMetadata) GetTenantName() string {
+	if x != nil {
+		return x.TenantName
+	}
+	return ""
+}
+
+func (x *TenantMetadata) GetLicenseKey() string {
+	if x != nil {
+		return x.LicenseKey
+	}
+	return ""
+}
+
+func (x *TenantMetadata) GetPlanType() string {
+	if x != nil {
+		return x.PlanType
+	}
+	return ""
+}
+
+func (x *TenantMetadata) GetValidTill() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ValidTill
+	}
+	return nil
+}
+
+func (x *TenantMetadata) GetMaxBranches() int32 {
+	if x != nil {
+		return x.MaxBranches
+	}
+	return 0
+}
+
+func (x *TenantMetadata) GetMaxUsers() int32 {
+	if x != nil {
+		return x.MaxUsers
+	}
+	return 0
+}
+
+func (x *TenantMetadata) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+func (x *TenantMetadata) GetTimezone() string {
+	if x != nil {
+		return x.Timezone
+	}
+	return ""
+}
+
 type ProvisioningRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
@@ -859,7 +1094,7 @@ type ProvisioningRequest struct {
 
 func (x *ProvisioningRequest) Reset() {
 	*x = ProvisioningRequest{}
-	mi := &file_pos_service_proto_msgTypes[10]
+	mi := &file_pos_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -871,7 +1106,7 @@ func (x *ProvisioningRequest) String() string {
 func (*ProvisioningRequest) ProtoMessage() {}
 
 func (x *ProvisioningRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_service_proto_msgTypes[10]
+	mi := &file_pos_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -884,7 +1119,7 @@ func (x *ProvisioningRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProvisioningRequest.ProtoReflect.Descriptor instead.
 func (*ProvisioningRequest) Descriptor() ([]byte, []int) {
-	return file_pos_service_proto_rawDescGZIP(), []int{10}
+	return file_pos_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ProvisioningRequest) GetTenantId() string {
@@ -913,7 +1148,7 @@ type ProvisioningEvent struct {
 
 func (x *ProvisioningEvent) Reset() {
 	*x = ProvisioningEvent{}
-	mi := &file_pos_service_proto_msgTypes[11]
+	mi := &file_pos_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -925,7 +1160,7 @@ func (x *ProvisioningEvent) String() string {
 func (*ProvisioningEvent) ProtoMessage() {}
 
 func (x *ProvisioningEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_service_proto_msgTypes[11]
+	mi := &file_pos_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -938,7 +1173,7 @@ func (x *ProvisioningEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProvisioningEvent.ProtoReflect.Descriptor instead.
 func (*ProvisioningEvent) Descriptor() ([]byte, []int) {
-	return file_pos_service_proto_rawDescGZIP(), []int{11}
+	return file_pos_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ProvisioningEvent) GetEventType() string {
@@ -982,7 +1217,7 @@ type ProvisioningConfirmation struct {
 
 func (x *ProvisioningConfirmation) Reset() {
 	*x = ProvisioningConfirmation{}
-	mi := &file_pos_service_proto_msgTypes[12]
+	mi := &file_pos_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -994,7 +1229,7 @@ func (x *ProvisioningConfirmation) String() string {
 func (*ProvisioningConfirmation) ProtoMessage() {}
 
 func (x *ProvisioningConfirmation) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_service_proto_msgTypes[12]
+	mi := &file_pos_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1007,7 +1242,7 @@ func (x *ProvisioningConfirmation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProvisioningConfirmation.ProtoReflect.Descriptor instead.
 func (*ProvisioningConfirmation) Descriptor() ([]byte, []int) {
-	return file_pos_service_proto_rawDescGZIP(), []int{12}
+	return file_pos_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ProvisioningConfirmation) GetTenantId() string {
@@ -1055,7 +1290,7 @@ type ProvisioningResponse struct {
 
 func (x *ProvisioningResponse) Reset() {
 	*x = ProvisioningResponse{}
-	mi := &file_pos_service_proto_msgTypes[13]
+	mi := &file_pos_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1067,7 +1302,7 @@ func (x *ProvisioningResponse) String() string {
 func (*ProvisioningResponse) ProtoMessage() {}
 
 func (x *ProvisioningResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_service_proto_msgTypes[13]
+	mi := &file_pos_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1080,7 +1315,7 @@ func (x *ProvisioningResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProvisioningResponse.ProtoReflect.Descriptor instead.
 func (*ProvisioningResponse) Descriptor() ([]byte, []int) {
-	return file_pos_service_proto_rawDescGZIP(), []int{13}
+	return file_pos_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ProvisioningResponse) GetAcknowledged() bool {
@@ -1110,7 +1345,7 @@ type NotificationSubscribeRequest struct {
 
 func (x *NotificationSubscribeRequest) Reset() {
 	*x = NotificationSubscribeRequest{}
-	mi := &file_pos_service_proto_msgTypes[14]
+	mi := &file_pos_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1122,7 +1357,7 @@ func (x *NotificationSubscribeRequest) String() string {
 func (*NotificationSubscribeRequest) ProtoMessage() {}
 
 func (x *NotificationSubscribeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_service_proto_msgTypes[14]
+	mi := &file_pos_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1135,7 +1370,7 @@ func (x *NotificationSubscribeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NotificationSubscribeRequest.ProtoReflect.Descriptor instead.
 func (*NotificationSubscribeRequest) Descriptor() ([]byte, []int) {
-	return file_pos_service_proto_rawDescGZIP(), []int{14}
+	return file_pos_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *NotificationSubscribeRequest) GetTenantId() string {
@@ -1190,7 +1425,7 @@ type Notification struct {
 
 func (x *Notification) Reset() {
 	*x = Notification{}
-	mi := &file_pos_service_proto_msgTypes[15]
+	mi := &file_pos_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1202,7 +1437,7 @@ func (x *Notification) String() string {
 func (*Notification) ProtoMessage() {}
 
 func (x *Notification) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_service_proto_msgTypes[15]
+	mi := &file_pos_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1215,7 +1450,7 @@ func (x *Notification) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Notification.ProtoReflect.Descriptor instead.
 func (*Notification) Descriptor() ([]byte, []int) {
-	return file_pos_service_proto_rawDescGZIP(), []int{15}
+	return file_pos_service_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *Notification) GetId() string {
@@ -1292,7 +1527,7 @@ type NotificationAck struct {
 
 func (x *NotificationAck) Reset() {
 	*x = NotificationAck{}
-	mi := &file_pos_service_proto_msgTypes[16]
+	mi := &file_pos_service_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1304,7 +1539,7 @@ func (x *NotificationAck) String() string {
 func (*NotificationAck) ProtoMessage() {}
 
 func (x *NotificationAck) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_service_proto_msgTypes[16]
+	mi := &file_pos_service_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1317,7 +1552,7 @@ func (x *NotificationAck) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NotificationAck.ProtoReflect.Descriptor instead.
 func (*NotificationAck) Descriptor() ([]byte, []int) {
-	return file_pos_service_proto_rawDescGZIP(), []int{16}
+	return file_pos_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *NotificationAck) GetNotificationId() string {
@@ -1350,7 +1585,7 @@ type NotificationAckResponse struct {
 
 func (x *NotificationAckResponse) Reset() {
 	*x = NotificationAckResponse{}
-	mi := &file_pos_service_proto_msgTypes[17]
+	mi := &file_pos_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1362,7 +1597,7 @@ func (x *NotificationAckResponse) String() string {
 func (*NotificationAckResponse) ProtoMessage() {}
 
 func (x *NotificationAckResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_service_proto_msgTypes[17]
+	mi := &file_pos_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1375,7 +1610,7 @@ func (x *NotificationAckResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NotificationAckResponse.ProtoReflect.Descriptor instead.
 func (*NotificationAckResponse) Descriptor() ([]byte, []int) {
-	return file_pos_service_proto_rawDescGZIP(), []int{17}
+	return file_pos_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *NotificationAckResponse) GetSuccess() bool {
@@ -1461,7 +1696,31 @@ const file_pos_service_proto_rawDesc = "" +
 	"\x1aheartbeat_interval_seconds\x18\x01 \x01(\x05R\x18heartbeatIntervalSeconds\x12(\n" +
 	"\x10event_batch_size\x18\x02 \x01(\x05R\x0eeventBatchSize\x126\n" +
 	"\x17reconnect_delay_seconds\x18\x03 \x01(\x05R\x15reconnectDelaySeconds\x12/\n" +
-	"\x13compression_enabled\x18\x04 \x01(\bR\x12compressionEnabled\"S\n" +
+	"\x13compression_enabled\x18\x04 \x01(\bR\x12compressionEnabled\"\x83\x01\n" +
+	"\x13VerifyTenantRequest\x12\x1f\n" +
+	"\vtenant_code\x18\x01 \x01(\tR\n" +
+	"tenantCode\x12\x14\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email\x12\x16\n" +
+	"\x06mobile\x18\x03 \x01(\tR\x06mobile\x12\x1d\n" +
+	"\n" +
+	"machine_id\x18\x04 \x01(\tR\tmachineId\"\x8b\x01\n" +
+	"\x14VerifyTenantResponse\x12\x14\n" +
+	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x14\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error\x12G\n" +
+	"\x0ftenant_metadata\x18\x03 \x01(\v2\x1e.aburpos.pos.v1.TenantMetadataR\x0etenantMetadata\"\xbf\x02\n" +
+	"\x0eTenantMetadata\x12\x1b\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x1f\n" +
+	"\vtenant_name\x18\x02 \x01(\tR\n" +
+	"tenantName\x12\x1f\n" +
+	"\vlicense_key\x18\x03 \x01(\tR\n" +
+	"licenseKey\x12\x1b\n" +
+	"\tplan_type\x18\x04 \x01(\tR\bplanType\x129\n" +
+	"\n" +
+	"valid_till\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tvalidTill\x12!\n" +
+	"\fmax_branches\x18\x06 \x01(\x05R\vmaxBranches\x12\x1b\n" +
+	"\tmax_users\x18\a \x01(\x05R\bmaxUsers\x12\x1a\n" +
+	"\bcurrency\x18\b \x01(\tR\bcurrency\x12\x1a\n" +
+	"\btimezone\x18\t \x01(\tR\btimezone\"S\n" +
 	"\x13ProvisioningRequest\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x1f\n" +
 	"\vlicense_key\x18\x02 \x01(\tR\n" +
@@ -1512,19 +1771,20 @@ const file_pos_service_proto_rawDesc = "" +
 	"\x18COMMAND_TYPE_LOCK_TENANT\x10\x04\x12\x1e\n" +
 	"\x1aCOMMAND_TYPE_UNLOCK_TENANT\x10\x05\x12 \n" +
 	"\x1cCOMMAND_TYPE_SOFTWARE_UPDATE\x10\x06\x12\"\n" +
-	"\x1eCOMMAND_TYPE_PUSH_NOTIFICATION\x10\a2\xae\x03\n" +
+	"\x1eCOMMAND_TYPE_PUSH_NOTIFICATION\x10\a2\x89\x04\n" +
 	"\x0fPOSEventService\x12U\n" +
 	"\vEventStream\x12 .aburpos.events.v1.EventEnvelope\x1a .aburpos.events.v1.EventEnvelope(\x010\x01\x12P\n" +
 	"\tHeartbeat\x12 .aburpos.pos.v1.HeartbeatRequest\x1a!.aburpos.pos.v1.HeartbeatResponse\x12P\n" +
 	"\x11SubscribeCommands\x12 .aburpos.pos.v1.SubscribeRequest\x1a\x17.aburpos.pos.v1.Command0\x01\x12Q\n" +
 	"\fPublishEvent\x12 .aburpos.events.v1.EventEnvelope\x1a\x1f.aburpos.pos.v1.PublishResponse\x12M\n" +
-	"\bRegister\x12\x1f.aburpos.pos.v1.RegisterRequest\x1a .aburpos.pos.v1.RegisterResponse2\xdc\x01\n" +
+	"\bRegister\x12\x1f.aburpos.pos.v1.RegisterRequest\x1a .aburpos.pos.v1.RegisterResponse\x12Y\n" +
+	"\fVerifyTenant\x12#.aburpos.pos.v1.VerifyTenantRequest\x1a$.aburpos.pos.v1.VerifyTenantResponse2\xdc\x01\n" +
 	"\x13ProvisioningService\x12^\n" +
 	"\x12StreamProvisioning\x12#.aburpos.pos.v1.ProvisioningRequest\x1a!.aburpos.pos.v1.ProvisioningEvent0\x01\x12e\n" +
 	"\x13ConfirmProvisioning\x12(.aburpos.pos.v1.ProvisioningConfirmation\x1a$.aburpos.pos.v1.ProvisioningResponse2\xe2\x01\n" +
 	"\x13NotificationService\x12f\n" +
 	"\x16SubscribeNotifications\x12,.aburpos.pos.v1.NotificationSubscribeRequest\x1a\x1c.aburpos.pos.v1.Notification0\x01\x12c\n" +
-	"\x17AcknowledgeNotification\x12\x1f.aburpos.pos.v1.NotificationAck\x1a'.aburpos.pos.v1.NotificationAckResponseB\x1fZ\x1dgithub.com/aburpos/pkg/pb/posb\x06proto3"
+	"\x17AcknowledgeNotification\x12\x1f.aburpos.pos.v1.NotificationAck\x1a'.aburpos.pos.v1.NotificationAckResponseB$Z\"github.com/yahyaoncloud/pkg/pb/posb\x06proto3"
 
 var (
 	file_pos_service_proto_rawDescOnce sync.Once
@@ -1539,7 +1799,7 @@ func file_pos_service_proto_rawDescGZIP() []byte {
 }
 
 var file_pos_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_pos_service_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_pos_service_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_pos_service_proto_goTypes = []any{
 	(CommandType)(0),                     // 0: aburpos.pos.v1.CommandType
 	(*HeartbeatRequest)(nil),             // 1: aburpos.pos.v1.HeartbeatRequest
@@ -1552,53 +1812,60 @@ var file_pos_service_proto_goTypes = []any{
 	(*RegisterRequest)(nil),              // 8: aburpos.pos.v1.RegisterRequest
 	(*RegisterResponse)(nil),             // 9: aburpos.pos.v1.RegisterResponse
 	(*ServerConfig)(nil),                 // 10: aburpos.pos.v1.ServerConfig
-	(*ProvisioningRequest)(nil),          // 11: aburpos.pos.v1.ProvisioningRequest
-	(*ProvisioningEvent)(nil),            // 12: aburpos.pos.v1.ProvisioningEvent
-	(*ProvisioningConfirmation)(nil),     // 13: aburpos.pos.v1.ProvisioningConfirmation
-	(*ProvisioningResponse)(nil),         // 14: aburpos.pos.v1.ProvisioningResponse
-	(*NotificationSubscribeRequest)(nil), // 15: aburpos.pos.v1.NotificationSubscribeRequest
-	(*Notification)(nil),                 // 16: aburpos.pos.v1.Notification
-	(*NotificationAck)(nil),              // 17: aburpos.pos.v1.NotificationAck
-	(*NotificationAckResponse)(nil),      // 18: aburpos.pos.v1.NotificationAckResponse
-	nil,                                  // 19: aburpos.pos.v1.RegisterRequest.CapabilitiesEntry
-	(*timestamppb.Timestamp)(nil),        // 20: google.protobuf.Timestamp
-	(*events.EventEnvelope)(nil),         // 21: aburpos.events.v1.EventEnvelope
+	(*VerifyTenantRequest)(nil),          // 11: aburpos.pos.v1.VerifyTenantRequest
+	(*VerifyTenantResponse)(nil),         // 12: aburpos.pos.v1.VerifyTenantResponse
+	(*TenantMetadata)(nil),               // 13: aburpos.pos.v1.TenantMetadata
+	(*ProvisioningRequest)(nil),          // 14: aburpos.pos.v1.ProvisioningRequest
+	(*ProvisioningEvent)(nil),            // 15: aburpos.pos.v1.ProvisioningEvent
+	(*ProvisioningConfirmation)(nil),     // 16: aburpos.pos.v1.ProvisioningConfirmation
+	(*ProvisioningResponse)(nil),         // 17: aburpos.pos.v1.ProvisioningResponse
+	(*NotificationSubscribeRequest)(nil), // 18: aburpos.pos.v1.NotificationSubscribeRequest
+	(*Notification)(nil),                 // 19: aburpos.pos.v1.Notification
+	(*NotificationAck)(nil),              // 20: aburpos.pos.v1.NotificationAck
+	(*NotificationAckResponse)(nil),      // 21: aburpos.pos.v1.NotificationAckResponse
+	nil,                                  // 22: aburpos.pos.v1.RegisterRequest.CapabilitiesEntry
+	(*timestamppb.Timestamp)(nil),        // 23: google.protobuf.Timestamp
+	(*events.EventEnvelope)(nil),         // 24: aburpos.events.v1.EventEnvelope
 }
 var file_pos_service_proto_depIdxs = []int32{
 	2,  // 0: aburpos.pos.v1.HeartbeatRequest.usage:type_name -> aburpos.pos.v1.UsageStats
-	20, // 1: aburpos.pos.v1.HeartbeatResponse.server_time:type_name -> google.protobuf.Timestamp
+	23, // 1: aburpos.pos.v1.HeartbeatResponse.server_time:type_name -> google.protobuf.Timestamp
 	6,  // 2: aburpos.pos.v1.HeartbeatResponse.pending_commands:type_name -> aburpos.pos.v1.Command
 	4,  // 3: aburpos.pos.v1.HeartbeatResponse.license_status:type_name -> aburpos.pos.v1.LicenseStatus
-	20, // 4: aburpos.pos.v1.LicenseStatus.expires_at:type_name -> google.protobuf.Timestamp
-	20, // 5: aburpos.pos.v1.Command.timestamp:type_name -> google.protobuf.Timestamp
-	19, // 6: aburpos.pos.v1.RegisterRequest.capabilities:type_name -> aburpos.pos.v1.RegisterRequest.CapabilitiesEntry
+	23, // 4: aburpos.pos.v1.LicenseStatus.expires_at:type_name -> google.protobuf.Timestamp
+	23, // 5: aburpos.pos.v1.Command.timestamp:type_name -> google.protobuf.Timestamp
+	22, // 6: aburpos.pos.v1.RegisterRequest.capabilities:type_name -> aburpos.pos.v1.RegisterRequest.CapabilitiesEntry
 	10, // 7: aburpos.pos.v1.RegisterResponse.config:type_name -> aburpos.pos.v1.ServerConfig
-	20, // 8: aburpos.pos.v1.Notification.timestamp:type_name -> google.protobuf.Timestamp
-	20, // 9: aburpos.pos.v1.Notification.expires_at:type_name -> google.protobuf.Timestamp
-	20, // 10: aburpos.pos.v1.NotificationAck.ack_time:type_name -> google.protobuf.Timestamp
-	21, // 11: aburpos.pos.v1.POSEventService.EventStream:input_type -> aburpos.events.v1.EventEnvelope
-	1,  // 12: aburpos.pos.v1.POSEventService.Heartbeat:input_type -> aburpos.pos.v1.HeartbeatRequest
-	5,  // 13: aburpos.pos.v1.POSEventService.SubscribeCommands:input_type -> aburpos.pos.v1.SubscribeRequest
-	21, // 14: aburpos.pos.v1.POSEventService.PublishEvent:input_type -> aburpos.events.v1.EventEnvelope
-	8,  // 15: aburpos.pos.v1.POSEventService.Register:input_type -> aburpos.pos.v1.RegisterRequest
-	11, // 16: aburpos.pos.v1.ProvisioningService.StreamProvisioning:input_type -> aburpos.pos.v1.ProvisioningRequest
-	13, // 17: aburpos.pos.v1.ProvisioningService.ConfirmProvisioning:input_type -> aburpos.pos.v1.ProvisioningConfirmation
-	15, // 18: aburpos.pos.v1.NotificationService.SubscribeNotifications:input_type -> aburpos.pos.v1.NotificationSubscribeRequest
-	17, // 19: aburpos.pos.v1.NotificationService.AcknowledgeNotification:input_type -> aburpos.pos.v1.NotificationAck
-	21, // 20: aburpos.pos.v1.POSEventService.EventStream:output_type -> aburpos.events.v1.EventEnvelope
-	3,  // 21: aburpos.pos.v1.POSEventService.Heartbeat:output_type -> aburpos.pos.v1.HeartbeatResponse
-	6,  // 22: aburpos.pos.v1.POSEventService.SubscribeCommands:output_type -> aburpos.pos.v1.Command
-	7,  // 23: aburpos.pos.v1.POSEventService.PublishEvent:output_type -> aburpos.pos.v1.PublishResponse
-	9,  // 24: aburpos.pos.v1.POSEventService.Register:output_type -> aburpos.pos.v1.RegisterResponse
-	12, // 25: aburpos.pos.v1.ProvisioningService.StreamProvisioning:output_type -> aburpos.pos.v1.ProvisioningEvent
-	14, // 26: aburpos.pos.v1.ProvisioningService.ConfirmProvisioning:output_type -> aburpos.pos.v1.ProvisioningResponse
-	16, // 27: aburpos.pos.v1.NotificationService.SubscribeNotifications:output_type -> aburpos.pos.v1.Notification
-	18, // 28: aburpos.pos.v1.NotificationService.AcknowledgeNotification:output_type -> aburpos.pos.v1.NotificationAckResponse
-	20, // [20:29] is the sub-list for method output_type
-	11, // [11:20] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	13, // 8: aburpos.pos.v1.VerifyTenantResponse.tenant_metadata:type_name -> aburpos.pos.v1.TenantMetadata
+	23, // 9: aburpos.pos.v1.TenantMetadata.valid_till:type_name -> google.protobuf.Timestamp
+	23, // 10: aburpos.pos.v1.Notification.timestamp:type_name -> google.protobuf.Timestamp
+	23, // 11: aburpos.pos.v1.Notification.expires_at:type_name -> google.protobuf.Timestamp
+	23, // 12: aburpos.pos.v1.NotificationAck.ack_time:type_name -> google.protobuf.Timestamp
+	24, // 13: aburpos.pos.v1.POSEventService.EventStream:input_type -> aburpos.events.v1.EventEnvelope
+	1,  // 14: aburpos.pos.v1.POSEventService.Heartbeat:input_type -> aburpos.pos.v1.HeartbeatRequest
+	5,  // 15: aburpos.pos.v1.POSEventService.SubscribeCommands:input_type -> aburpos.pos.v1.SubscribeRequest
+	24, // 16: aburpos.pos.v1.POSEventService.PublishEvent:input_type -> aburpos.events.v1.EventEnvelope
+	8,  // 17: aburpos.pos.v1.POSEventService.Register:input_type -> aburpos.pos.v1.RegisterRequest
+	11, // 18: aburpos.pos.v1.POSEventService.VerifyTenant:input_type -> aburpos.pos.v1.VerifyTenantRequest
+	14, // 19: aburpos.pos.v1.ProvisioningService.StreamProvisioning:input_type -> aburpos.pos.v1.ProvisioningRequest
+	16, // 20: aburpos.pos.v1.ProvisioningService.ConfirmProvisioning:input_type -> aburpos.pos.v1.ProvisioningConfirmation
+	18, // 21: aburpos.pos.v1.NotificationService.SubscribeNotifications:input_type -> aburpos.pos.v1.NotificationSubscribeRequest
+	20, // 22: aburpos.pos.v1.NotificationService.AcknowledgeNotification:input_type -> aburpos.pos.v1.NotificationAck
+	24, // 23: aburpos.pos.v1.POSEventService.EventStream:output_type -> aburpos.events.v1.EventEnvelope
+	3,  // 24: aburpos.pos.v1.POSEventService.Heartbeat:output_type -> aburpos.pos.v1.HeartbeatResponse
+	6,  // 25: aburpos.pos.v1.POSEventService.SubscribeCommands:output_type -> aburpos.pos.v1.Command
+	7,  // 26: aburpos.pos.v1.POSEventService.PublishEvent:output_type -> aburpos.pos.v1.PublishResponse
+	9,  // 27: aburpos.pos.v1.POSEventService.Register:output_type -> aburpos.pos.v1.RegisterResponse
+	12, // 28: aburpos.pos.v1.POSEventService.VerifyTenant:output_type -> aburpos.pos.v1.VerifyTenantResponse
+	15, // 29: aburpos.pos.v1.ProvisioningService.StreamProvisioning:output_type -> aburpos.pos.v1.ProvisioningEvent
+	17, // 30: aburpos.pos.v1.ProvisioningService.ConfirmProvisioning:output_type -> aburpos.pos.v1.ProvisioningResponse
+	19, // 31: aburpos.pos.v1.NotificationService.SubscribeNotifications:output_type -> aburpos.pos.v1.Notification
+	21, // 32: aburpos.pos.v1.NotificationService.AcknowledgeNotification:output_type -> aburpos.pos.v1.NotificationAckResponse
+	23, // [23:33] is the sub-list for method output_type
+	13, // [13:23] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_pos_service_proto_init() }
@@ -1612,7 +1879,7 @@ func file_pos_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pos_service_proto_rawDesc), len(file_pos_service_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   19,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   3,
 		},
